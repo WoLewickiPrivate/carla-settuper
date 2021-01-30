@@ -18,6 +18,8 @@ import subprocess
 import psutil
 import argparse
 
+import manual_control
+
 class Env():
 
     def __init__(self, args):
@@ -78,6 +80,12 @@ def main():
         default='1',
         help="number of the map. Options are: '1', '2', '3'.")
     argparser.add_argument(
+        '--manual',
+        metavar='M',
+        default=0,
+        type=int,
+        help="Should the player take control over the vehicle. `0` for `true`, `false` otherwise. If you choose this option, the next ones don't change anything. It uses the configuration provided by Carla's package.")
+    argparser.add_argument(
         '--model',
         metavar='M',
         default='3',
@@ -92,14 +100,18 @@ def main():
         
     args.width, args.height = [int(x) for x in args.res.split('x')]
 
-    game = None
-    try:
-        game = Env(args)
-    except KeyboardInterrupt:
-        print('\n Ending simulation')
-    finally:
-        if game is not None:
-            game.destroy_actors()
+
+    if args.manual == 0:
+        manual_control.main()
+    else:
+        game = None
+        try:
+            game = Env(args)
+        except KeyboardInterrupt:
+            print('\n Ending simulation')
+        finally:
+            if game is not None:
+                game.destroy_actors()
 
 if __name__ == '__main__':
    main()

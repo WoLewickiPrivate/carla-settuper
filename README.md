@@ -49,3 +49,7 @@ Model of the simulation cars should aquire. '0' for Chevy Impala, '1' for Merced
 ## --actors
 
 Number of actors to be spawned. Defaults to `3`.
+
+## --manual
+
+Should the player take control over the vehicle. `0` for `true`, `false` otherwise. If you choose this option, the previous ones don't change anything. Defaults to `0`, so if you want the basic version, please provide `1`.
